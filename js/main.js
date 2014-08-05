@@ -46,7 +46,7 @@ var generateMap = function(geoLat, geoLon) {
       var concertTime = new Date(events[i].datetime_local);
       var hour = concertTime.getHours();
       concertTime.setHours(hour + 3);
-      listings += '<div id="listing" class="listings" ' + dataHTML + '"><span class="titles">' + events[i].title + '</span><br><span>' + events[i].venue.name +'</span><span class="time">' + concertTime.toLocaleTimeString().replace(':00','') + '</span></div>';
+      listings += '<div id="listing" class="listings" ' + dataHTML + '"><span class="titles"><a target="_blank" href="' + events[i].url + '">' + events[i].title + '</a></span><br><span>' + events[i].venue.name +'</span><span class="time">' + concertTime.toLocaleTimeString().replace(':00','') + '</span></div>';
     }
     $(".sidebar").append(listings);
 
