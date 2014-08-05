@@ -1,4 +1,6 @@
-var map = L.mapbox.map('map', 'examples.map-i80bb8p3');
+var map = L.mapbox.map('map', 'examples.map-i80bb8p3')
+  .setView([38.8951, -77.0367], 10);
+
 L.mapbox.featureLayer()
   .addTo(map);
 
@@ -11,51 +13,33 @@ $.ajax({
   context: this
 }).then(createMarkers);
 
-var listings = document.getElementById('listing');
+var markers = [];
 
 function createMarkers(response) {
   var events = response.events;
 
-  for(var i=0; i < events.length; i++) {
-    var concert = events[i];
-    concerts.eachLayer(function(concert) {
-      debugger;
-      // Parse into the geojson for each locale
-      var prop = locale.feature.properties;
+  for (var i=0; i<events.length; i++) {
 
-      var listing = listings.appendChild(document.createElement('div'));
-      listing.className = 'item';
-
-      var link = listing.appendChild(document.createElement('a'));
-      link.href = '#';
-      link.className = 'title';
-      link.innerHTML = prop.address;
-
-      if (prop.crossStreet) {
-        link.innerHTML += '<br /><small>' + prop.crossStreet + '</small>';
-      }
-
-      var details = listing.appendChild(document.createElement('div'));
-      details.innerHTML = prop.city;
-
-      if (prop.phone) {
-        details.innerHTML += ' &middot; ' + prop.phoneFormatted;
-      }
-
-      link.onclick = function() {
-        // 1. Toggle an active class for `listing`. View the source in the demo link for example.
-
-        // 2. When a menu item is clicked, animate the map to center its associated locale and open its popup.
-        map.setView(locale.getLatLng(), 16);
-        locale.openPopup();
-      };
-
-      var popup = 'Sweetgreen';
-      locale.bindPopup(popup);
-
-      locale.on('click', function() {
-        map.setView(locale.getLatLng, 16);
-      });
-    });
+    var marker = L.marker([events[i].venue.location.lat, events[i].venue.location.lon], {
+      icon: L.mapbox.marker.icon({
+        'marker-color': '#0072b1'
+      })
+    }).addTo(map);
   }
+
+  createListings(events);
+}
+
+function createListings(events) {
+  var listings = '';
+
+  for (var i=0; i<events.length; i++) {
+    var dataHTML = 'data-lat="' + events[i].venue.location.lat + '" data-lon="' + events[i].venue.location.lon;
+    listings += '<div id="listing" class="listings" ' + dataHTML + '">' + events[i].title + '</div>';
+  }
+  $(".sidebar").append(listings);
+
+  $(".listings").on('click', function() {
+    map.setView([$(this).data("lat"), $(this).data("lon")], 15);
+  });
 }
