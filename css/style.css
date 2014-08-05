@@ -37,11 +37,13 @@ body {
 
 .spacer {
     width: 100%;
-    height: 21%;
+    height: 18%;
 }
 
 .listings {
-  padding-left: 5%;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  padding: 5%;
 }
 
 .map {
@@ -57,7 +59,11 @@ body {
   -webkit-box-sizing:border-box;
      -moz-box-sizing:border-box;
           box-sizing:border-box;
-  }
+}
+
+.time {
+  float: right;
+}
 
 .titles {
   font-size: 1.2em;
