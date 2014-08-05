@@ -4,7 +4,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
 
 var generateMap = function(geoLat, geoLon) {
   var currentDate = new Date(Date.now());
-  var convertedDate = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDate();
+  var convertedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
 
   var map = L.mapbox.map('map', 'examples.map-i80bb8p3')
     .setView([geoLat, geoLon], 10);
