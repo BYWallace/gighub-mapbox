@@ -39,6 +39,7 @@ var generateMap = function(geoLat, geoLon) {
     for (var i=0; i<events.length; i++) {
       var dataHTML = 'data-lat="' + events[i].venue.location.lat + '" data-lon="' + events[i].venue.location.lon;
       var concertTime = new Date(events[i].datetime_local).toLocaleTimeString();
+      debugger;
       listings += '<div id="listing" class="listings" ' + dataHTML + '"><span class="titles">' + events[i].title + '</span><br><span>' + events[i].venue.name +'</span><span class="time">' + concertTime + '</span></div>';
     }
     $(".sidebar").append(listings);
