@@ -35,7 +35,7 @@ function createListings(events) {
 
   for (var i=0; i<events.length; i++) {
     var dataHTML = 'data-lat="' + events[i].venue.location.lat + '" data-lon="' + events[i].venue.location.lon;
-    listings += '<div id="listing" class="listings" ' + dataHTML + '">' + events[i].title + '</div>';
+    listings += '<div id="listing" class="listings" ' + dataHTML + '"><h2>' + events[i].title + '</h2>' + events[i].venue.name +'</div>';
   }
   $(".sidebar").append(listings);
 

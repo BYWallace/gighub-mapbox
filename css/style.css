@@ -1,9 +1,14 @@
+body, html {
+  height: 100%;
+}
+
 body {
   background:#404040;
   color:#f8f8f8;
   font:500 20px/26px 'Helvetica Neue', Helvetica, Arial, Sans-serif;
   margin:0;
   padding:0;
+  position: relative;
   -webkit-font-smoothing:antialiased;
   }
 /**
@@ -11,6 +16,8 @@ body {
  * gets 2/3 of the page. You can adjust this to your personal liking.
  */
 .sidebar {
+  height: 100%;
+  overflow: auto;
   width:33.3333%;
   }
 .map {
