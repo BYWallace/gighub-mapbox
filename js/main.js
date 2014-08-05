@@ -16,7 +16,12 @@ var generateMap = function(geoLat, geoLon) {
     context: this
   }).then(createMarkers);
 
-  var markers = [];
+  L.marker([geoLat, geoLon], {
+    icon: L.mapbox.marker.icon({
+      'marker-color': '#dd4b39',
+      'marker-symbol': 'star'
+    })
+  }).addTo(map);
 
   function createMarkers(response) {
     var events = response.events;
