@@ -1,45 +1,49 @@
-var map = L.mapbox.map('map', 'examples.map-i80bb8p3')
-  .setView([38.8951, -77.0367], 10);
+navigator.geolocation.getCurrentPosition(function(position) {
+  generateMap(position.coords.latitude, position.coords.longitude);
+});
 
-L.mapbox.featureLayer()
-  .addTo(map);
+var generateMap = function(geoLat, geoLon) {
+  var currentDate = new Date(Date.now());
+  var convertedDate = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDate();
 
-var concerts = L.mapbox.featureLayer().addTo(map);
+  var map = L.mapbox.map('map', 'examples.map-i80bb8p3')
+    .setView([geoLat, geoLong], 10);
 
-$.ajax({
-  url: "http://api.seatgeek.com/2/events?geoip=50.200.196.50&range=25mi&datetime_local=2014-08-07&taxonomies.name=concert",
-  type: "get",
-  dataType: "json",
-  context: this
-}).then(createMarkers);
+  $.ajax({
+    url: "http://api.seatgeek.com/2/events?lat=" + geoLat + "&lon=" + geoLong + "&range=25mi&datetime_local=" + convertedDate + "&taxonomies.name=concert",
+    type: "get",
+    dataType: "json",
+    context: this
+  }).then(createMarkers);
 
-var markers = [];
+  var markers = [];
 
-function createMarkers(response) {
-  var events = response.events;
+  function createMarkers(response) {
+    var events = response.events;
 
-  for (var i=0; i<events.length; i++) {
+    for (var i=0; i<events.length; i++) {
 
-    var marker = L.marker([events[i].venue.location.lat, events[i].venue.location.lon], {
-      icon: L.mapbox.marker.icon({
-        'marker-color': '#0072b1'
-      })
-    }).addTo(map);
+      var marker = L.marker([events[i].venue.location.lat, events[i].venue.location.lon], {
+        icon: L.mapbox.marker.icon({
+          'marker-color': '#0072b1'
+        })
+      }).addTo(map);
+    }
+
+    createListings(events);
   }
 
-  createListings(events);
-}
+  function createListings(events) {
+    var listings = '';
 
-function createListings(events) {
-  var listings = '';
+    for (var i=0; i<events.length; i++) {
+      var dataHTML = 'data-lat="' + events[i].venue.location.lat + '" data-lon="' + events[i].venue.location.lon;
+      listings += '<div id="listing" class="listings" ' + dataHTML + '"><span class="titles">' + events[i].title + '</span><br><span>' + events[i].venue.name +'</span></div><hr>';
+    }
+    $(".sidebar").append(listings);
 
-  for (var i=0; i<events.length; i++) {
-    var dataHTML = 'data-lat="' + events[i].venue.location.lat + '" data-lon="' + events[i].venue.location.lon;
-    listings += '<div id="listing" class="listings" ' + dataHTML + '"><h2>' + events[i].title + '</h2>' + events[i].venue.name +'</div>';
+    $(".listings").on('click', function() {
+      map.setView([$(this).data("lat"), $(this).data("lon")], 15);
+    });
   }
-  $(".sidebar").append(listings);
-
-  $(".listings").on('click', function() {
-    map.setView([$(this).data("lat"), $(this).data("lon")], 15);
-  });
-}
+};
