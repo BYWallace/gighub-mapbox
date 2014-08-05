@@ -32,5 +32,19 @@ locations.on('ready', function() {
       details.innerHTML += ' &middot; ' + prop.phoneFormatted;
     }
 
+    link.on('click', function() {
+      // 1. Toggle an active class for `listing`. View the source in the demo link for example.
+
+      // 2. When a menu item is clicked, animate the map to center its associated locale and open its popup.
+      map.setView(locale.getLatLng(), 16);
+      locale.openPopup();
+    });
+
+    var popup = 'Sweetgreen';
+    locale.bindPopup(popup);
+
+    locale.on('click', function() {
+      map.setView(locale.getLatLng, 16);
+    });
   });
 });
