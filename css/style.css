@@ -5,7 +5,7 @@ body, html {
 body {
   background:#D3D3D3;
   color:black;
-  font:500 20px/26px 'Helvetica Neue', Helvetica, Arial, Sans-serif;
+  font-family: 'Montserrat', sans-serif;
   margin:0;
   padding:0;
   position: relative;
