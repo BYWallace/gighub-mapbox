@@ -4,11 +4,18 @@ L.mapbox.featureLayer()
   .addTo(map);
 
 var locations = L.mapbox.featureLayer().addTo(map);
-locations.loadURL('data/sweetgreen.geojson');
+
+$.ajax({
+  url: "http://api.seatgeek.com/2/events?geoip=50.200.196.50&range=25mi&datetime_local=2014-08-07&taxonomies.name=concert",
+  type: "get",
+  dataType: "json",
+  context: this
+}).then(createMarkers);
 
 var listings = document.getElementById('listing');
 
-locations.on('ready', function() {
+function createMarkers(response) {
+  debugger;
   locations.eachLayer(function(locale) {
     // Parse into the geojson for each locale
     var prop = locale.feature.properties;
@@ -47,4 +54,4 @@ locations.on('ready', function() {
       map.setView(locale.getLatLng, 16);
     });
   });
-});
+}
