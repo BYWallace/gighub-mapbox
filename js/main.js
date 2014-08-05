@@ -7,10 +7,10 @@ var generateMap = function(geoLat, geoLon) {
   var convertedDate = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDate();
 
   var map = L.mapbox.map('map', 'examples.map-i80bb8p3')
-    .setView([geoLat, geoLong], 10);
+    .setView([geoLat, geoLon], 10);
 
   $.ajax({
-    url: "http://api.seatgeek.com/2/events?lat=" + geoLat + "&lon=" + geoLong + "&range=25mi&datetime_local=" + convertedDate + "&taxonomies.name=concert",
+    url: "http://api.seatgeek.com/2/events?lat=" + geoLat + "&lon=" + geoLon + "&range=25mi&datetime_local=" + convertedDate + "&taxonomies.name=concert",
     type: "get",
     dataType: "json",
     context: this
