@@ -32,7 +32,9 @@ var generateMap = function(geoLat, geoLon) {
         icon: L.mapbox.marker.icon({
           'marker-color': '#0072b1'
         })
-      }).addTo(map);
+      })
+      .bindPopup(events[i].title + ' - ' + events[i].venue.name)
+      .addTo(map);
     }
 
     createListings(events);
